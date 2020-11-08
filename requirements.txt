@@ -1,0 +1,5 @@
+Pillow
+fake-rpigpio
+unicornhatmini
+
+
