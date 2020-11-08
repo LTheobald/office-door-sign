@@ -4,7 +4,7 @@ import sys
 
 from colorsys import hsv_to_rgb
 
-from PIL import Image, ImageDraw, ImageFont
+from Pillow import Image, ImageDraw, ImageFont
 from unicornhatmini import UnicornHATMini
 
 # The text we want to display. You should probably keep this line and replace it below

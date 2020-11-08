@@ -3,6 +3,9 @@
 *.code-workspace
 .history/
 
+# Python
+env/
+
 # Flask
 instance/
 .webassets-cache
