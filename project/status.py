@@ -14,10 +14,13 @@ unicornhatmini.set_brightness(0.1)
 
 def draw(status):
     if status == Status.FREE:
+        print("Setting status to FREE")
         unicornhatmini.set_all(0, 255, 0)
     elif status == Status.WORKING:
+        print("Setting status to WORKING")
         unicornhatmini.set_all(255, 0, 0)
     elif status == Status.ON_CALL:
+        print("Setting status to ON CALL")
         unicornhatmini.set_all(0, 255, 255)
 
     unicornhatmini.show()

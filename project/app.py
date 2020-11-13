@@ -1,8 +1,11 @@
 from flask import Flask, jsonify, request
-from .status import Status, draw
+from project.status import Status, draw
 
 app = Flask(__name__)
-switched_on = False
+switched_on = True
+current_status = Status.FREE
+while switched_on:
+    draw(current_status)
 
 
 @app.route("/")
@@ -14,10 +17,10 @@ def root():
 def switch():
     content = request.json
     if content["switch"] == "on":
-        switchedOn = True;
+        switched_on = True;
         return jsonify({"switch":"on"}), 200
     elif content["switch"] == "off":
-        switchedOn = False;
+        switched_on = False;
         return jsonify({"switch":"off"}), 200
     else:
         return "", 400
@@ -32,15 +35,10 @@ def status():
 def set_status(status):
     for name, member in Status.__members__.items():
         if (name == status) | (name.lower() == status):
-            currentStatus = member
+            current_status = member
             print("Name is " + name)
             return jsonify({"status":name.lower()}), 200
     return jsonify({"status":"unknown"}), 404
-
-
-currentStatus = Status.FREE
-while switched_on:
-    draw(currentStatus)
 
 
 if __name__ == "__main__":
