@@ -30,4 +30,24 @@ def test_status():
     tester = app.test_client()
     response = tester.post("/status", content_type="application/json")
 
+    # Posting with a status of free will set the free status on
+    response = tester.post("/status", json={"status":"free"}, content_type="application/json")
+    data = json.loads(response.get_data(as_text=True))
     assert response.status_code == 200
+    assert data["status"] == "free"
+
+    # Posting with a status of working will set the free status on
+    response = tester.post("/status", json={"status":"working"}, content_type="application/json")
+    data = json.loads(response.get_data(as_text=True))
+    assert response.status_code == 200
+    assert data["status"] == "working"
+
+    # Posting with a status of oncall will set the free status on
+    response = tester.post("/status", json={"status":"on_call"}, content_type="application/json")
+    data = json.loads(response.get_data(as_text=True))
+    assert response.status_code == 200
+    assert data["status"] == "on_call"
+
+    # Posting an unknown status returns a 404
+    response = tester.post("/status", json={"status":"somethingmadeup"}, content_type="application/json")
+    assert response.status_code == 404
