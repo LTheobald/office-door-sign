@@ -5,6 +5,8 @@
 
 # Python
 env/
+.pytest_cache
+.pyc
 
 # Flask
 instance/
