@@ -5,6 +5,11 @@ app = Flask(__name__)
 switched_on = False
 
 
+@app.route("/")
+def root():
+    return jsonify({"running":"ok"}), 200
+
+
 @app.route("/switch", methods = ['POST'])
 def switch():
     content = request.json
@@ -39,4 +44,4 @@ while switched_on:
 
 
 if __name__ == "__main__":
-    app.run()
+    app.run(host="0.0.0.0")
