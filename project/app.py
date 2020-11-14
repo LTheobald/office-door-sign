@@ -17,6 +17,7 @@ def root():
 @app.route("/switch", methods = ['POST'])
 def switch():
     global switched_on
+    global current_status
 
     content = request.json
     if content["switch"] == "on":
@@ -24,6 +25,7 @@ def switch():
         print('Switching on')
         return jsonify({"switch":"on"}), 200
     elif content["switch"] == "off":
+        current_status = Status.OFF
         switched_on = False;
         print('Switching off')
         return jsonify({"switch":"off"}), 200
@@ -52,7 +54,6 @@ def display_loop():
     global switched_on
     global current_status
 
-    print("In display_loop")
     while switched_on:
         draw(current_status)
         time.sleep(0.05)

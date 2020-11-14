@@ -16,6 +16,7 @@ class Status(Enum):
     FREE = auto()
     WORKING = auto()
     ON_CALL = auto()
+    OFF = auto()
 
 
 unicornhatmini.set_rotation(0)
@@ -29,5 +30,7 @@ def draw(status):
         unicornhatmini.set_all(255, 0, 0)
     elif status == Status.ON_CALL:
         unicornhatmini.set_all(0, 255, 255)
+    elif status == Status.OFF:
+        unicornhatmini.clear()
 
     unicornhatmini.show()
