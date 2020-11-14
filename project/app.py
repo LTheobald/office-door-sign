@@ -10,7 +10,7 @@ current_status = Status.FREE
 
 @app.route("/")
 def root():
-    return jsonify({"running":"ok"}), 200
+    return jsonify({"running":True}), 200
 
 
 @app.route("/switch", methods = ['POST'])
@@ -48,8 +48,6 @@ def set_status(status):
 
 
 def display_loop():
-    global current_status
-
     while True:
         draw(current_status)
         time.sleep(0.05)
@@ -59,3 +57,4 @@ x = threading.Thread(target=display_loop)
 x.start()
 if __name__ == "__main__":
     app.run(debug=True)
+

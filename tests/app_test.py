@@ -1,10 +1,17 @@
 from project.app import app
 from flask import json
 
+tester = app.test_client()
+
+
+def test_root():
+    response = tester.get("/")
+    data = json.loads(response.get_data(as_text=True))
+    assert response.status_code == 200
+    assert data["running"]
+
 
 def test_switch():
-    tester = app.test_client()
-
     # Posting with a state of 'off' will turn the display off
     response = tester.post("/switch", json={"switch":"off"}, content_type="application/json")
     data = json.loads(response.get_data(as_text=True))
@@ -27,7 +34,6 @@ def test_switch():
 
 
 def test_status():
-    tester = app.test_client()
     response = tester.post("/status", content_type="application/json")
 
     # Posting with a status of free will set the free status on
