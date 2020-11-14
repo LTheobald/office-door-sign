@@ -1,6 +1,8 @@
+import time
+import threading
 from flask import Flask, jsonify, request
 from project.status import Status, draw
-from multiprocessing import Process, Value
+
 
 app = Flask(__name__)
 switched_on = True
@@ -14,12 +16,16 @@ def root():
 
 @app.route("/switch", methods = ['POST'])
 def switch():
+    global switched_on
+
     content = request.json
     if content["switch"] == "on":
         switched_on = True;
+        print('Switching on')
         return jsonify({"switch":"on"}), 200
     elif content["switch"] == "off":
         switched_on = False;
+        print('Switching off')
         return jsonify({"switch":"off"}), 200
     else:
         return "", 400
@@ -32,6 +38,8 @@ def status():
 
 
 def set_status(status):
+    global current_status
+
     for name, member in Status.__members__.items():
         if (name == status) | (name.lower() == status):
             print("Setting new state to " + name)
@@ -41,15 +49,16 @@ def set_status(status):
 
 
 def display_loop():
+    global switched_on
+    global current_status
+
+    print("In display_loop")
     while switched_on:
-        print(current_status)
-        #draw(current_status)
+        draw(current_status)
         time.sleep(0.05)
 
 
+x = threading.Thread(target=display_loop)
+x.start()
 if __name__ == "__main__":
-    display_on = Value('b', True)
-    p = Process(target=display_loop, args=(display_on,))
-    p.start()
-    app.run(host="0.0.0.0", debug=True, use_reloader=False)
-    p.join()
+    app.run(debug=True)
