@@ -5,7 +5,6 @@ from project.status import Status, draw
 
 
 app = Flask(__name__)
-switched_on = True
 current_status = Status.FREE
 
 
@@ -16,18 +15,16 @@ def root():
 
 @app.route("/switch", methods = ['POST'])
 def switch():
-    global switched_on
     global current_status
 
     content = request.json
     if content["switch"] == "on":
-        switched_on = True;
         print('Switching on')
+        current_status = Status.FREE
         return jsonify({"switch":"on"}), 200
     elif content["switch"] == "off":
-        current_status = Status.OFF
-        switched_on = False;
         print('Switching off')
+        current_status = Status.OFF
         return jsonify({"switch":"off"}), 200
     else:
         return "", 400
@@ -51,10 +48,9 @@ def set_status(status):
 
 
 def display_loop():
-    global switched_on
     global current_status
 
-    while switched_on:
+    while True:
         draw(current_status)
         time.sleep(0.05)
 
