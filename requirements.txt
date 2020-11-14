@@ -1,3 +1,4 @@
 flask
 pytest
+gunicorn
 unicornhatmini>=0.0.2; sys_platform == 'linux'
