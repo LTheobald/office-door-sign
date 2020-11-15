@@ -38,7 +38,7 @@ def create_app():
         global doorSign
         safeStatus = escape(status)
         if doorSign.set(safeStatus):
-            print("Status is now " + doorSign.get)
+            print("Status is now " + doorSign.get())
             return jsonify({"status": safeStatus}), 200
         return jsonify({"status": "UNKNOWN: " + safeStatus}), 404
 
