@@ -16,7 +16,7 @@ def create_app():
 
     def display_loop():
         while running:
-            doorSign.draw*()
+            doorSign.draw()
             time.sleep(0.05)
 
     @app.route("/")
@@ -37,7 +37,7 @@ def create_app():
 
     p = Process(target=display_loop)
     p.start()
-    atexit.register(interrupt(p))
+    atexit.register(interrupt)
     return app
 
 
