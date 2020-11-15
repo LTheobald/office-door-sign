@@ -11,16 +11,11 @@ def create_app():
     doorSign = DoorSign()
     running = True
 
-    manager = Manager()
-    lproxy = manager.list()
-    lproxy.append(doorSign)
-
     def interrupt():
         print("Terminating")
         p.terminate()
 
-    def display_loop(listProxy):
-        doorSign = listProxy[0]
+    def display_loop():
         while running:
             doorSign.draw()
             time.sleep(0.05)
@@ -41,7 +36,7 @@ def create_app():
             return jsonify({"status": safeStatus}), 200
         return jsonify({"status": "UNKNOWN: " + safeStatus}), 404
 
-    p = Process(target=display_loop, args=(lproxy,))
+    p = Process(target=display_loop)
     p.start()
     atexit.register(interrupt)
     return app
