@@ -1,10 +1,12 @@
 import time
-import threading
 from flask import Flask, jsonify, request
+from flask_script import Manager, Server
+from multiprocessing import Process
 from project.doorsign import DoorSign
 
 
 app = Flask(__name__)
+running = True
 doorSign = DoorSign()
 
 
@@ -28,13 +30,24 @@ def status():
 
 
 def display_loop():
-    while True:
+    print("Started loop")
+    while running:
+        print("In loop")
         DoorSign.draw
         time.sleep(0.05)
+    pass
 
 
-x = threading.Thread(target=display_loop)
-x.start()
+class CustomServer(Server):
+    def __call__(self, app, *args, **kwargs):
+        global p
+        p = Process(target=display_loop)
+        p.start()
+        return Server.__call__(self, app, *args, **kwargs)
+
+
+manager = Manager(app)
+manager.add_command('runserver', CustomServer())
+
 if __name__ == "__main__":
-    app.run(debug=True)
-
+    manager.run()

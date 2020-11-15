@@ -1,9 +1,9 @@
 import sys
 from enum import IntEnum
+from unicornhatmini import UnicornHATMini
 
 
 class DoorSign:
-
     # Define the enum for states
     class Status(IntEnum):
         OFF = 0
@@ -12,15 +12,8 @@ class DoorSign:
         ON_CALL = 3
 
     def __init__(self):
-        # UnicornHatMini will only build on a Linux box so I mock this out on other platforms
-        if sys.platform.startswith("linux"):
-            from unicornhatmini import UnicornHATMini
-            self.unicornhatmini = UnicornHATMini()
-        else:
-            from unittest import mock
-            self.unicornhatmini = mock.Mock()
-
         self.current_status = self.Status.FREE
+        self.unicornhatmini = UnicornHATMini()
         self.unicornhatmini.set_rotation(0)
         self.unicornhatmini.set_brightness(0.1)
 
