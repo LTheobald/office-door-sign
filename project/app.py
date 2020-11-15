@@ -10,7 +10,7 @@ def create_app():
     running = True
     doorSign = DoorSign()
 
-    def interrupt(p):
+    def interrupt():
         print("Terminating")
         p.terminate()
 
