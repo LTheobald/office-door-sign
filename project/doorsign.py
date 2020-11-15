@@ -1,6 +1,5 @@
 import sys
 from enum import IntEnum
-from gpiozero import Button
 
 
 class DoorSign:
@@ -22,10 +21,6 @@ class DoorSign:
             self.unicornhatmini = mock.Mock()
 
         self.current_status = self.Status.FREE
-        self.button_a = Button(5)
-        self.button_b = Button(6)
-        self.button_x = Button(16)
-        self.button_y = Button(24)
         self.unicornhatmini.set_rotation(0)
         self.unicornhatmini.set_brightness(0.1)
 
