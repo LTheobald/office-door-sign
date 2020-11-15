@@ -12,18 +12,21 @@ class DoorSign:
         ON_CALL = 3
 
     def __init__(self):
+        print(Door Init)
         self.current_status = self.Status.FREE
         self.unicornhatmini = UnicornHATMini()
         self.unicornhatmini.set_rotation(0)
         self.unicornhatmini.set_brightness(0.1)
 
     def switch(self):
+        print("Switch")
         if self.current_status is self.Status.OFF:
             self.current_status = self.Status.FREE
         else:
             self.current_status = self.Status.OFF
 
     def cycle(self):
+        print("Cycle")
         if self.current_status+1 is len(self.Status):
             self.current_status = self.Status(0)
         else:
@@ -33,6 +36,7 @@ class DoorSign:
         for name, member in self.Status.__members__.items():
             if (name == status) | (name.lower() == status):
                 self.current_status = member
+                print("Set!")
                 return True
         return False
 
