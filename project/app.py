@@ -16,7 +16,7 @@ def create_app():
 
     def display_loop():
         while running:
-            doorSign.draw
+            doorSign.draw*()
             time.sleep(0.05)
 
     @app.route("/")
