@@ -3,6 +3,7 @@ import atexit
 from flask import Flask, jsonify, request
 from multiprocessing import Process
 from project.doorsign import DoorSign
+from markupsafe import escape
 
 
 def create_app():
@@ -28,12 +29,12 @@ def create_app():
         doorSign.switch
         return "OK", 200
 
-    @app.route("/status", methods=['POST'])
-    def status():
-        content = request.json
-        if doorSign.set(content["status"]):
-            return jsonify({"status": content["status"]}), 200
-        return jsonify({"status": "UNKNOWN: " + content["status"]}), 404
+    @app.route("/status/<status>")
+    def status(status):
+        safeStatus = escape(status)
+        if doorSign.set(safeStatus):
+            return jsonify({"status": safeStatus}), 200
+        return jsonify({"status": "UNKNOWN: " + safeStatus}), 404
 
     p = Process(target=display_loop)
     p.start()
