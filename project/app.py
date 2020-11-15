@@ -15,7 +15,7 @@ def root():
 
 @app.route("/switch")
 def switch():
-    doorSign.switch()
+    doorSign.switch
     return "OK", 200
 
 
@@ -29,7 +29,7 @@ def status():
 
 def display_loop():
     while True:
-        DoorSign.draw()
+        DoorSign.draw
         time.sleep(0.05)
 
 
