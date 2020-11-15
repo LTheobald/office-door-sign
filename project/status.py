@@ -1,4 +1,5 @@
 import sys
+import threading
 from enum import IntEnum
 from gpiozero import Button
 from signal import pause
@@ -60,15 +61,19 @@ def draw():
 
     unicornhatmini.show()
 
+def button_loop():
+    try:
+        button_a.when_pressed = switch
+        button_b.when_pressed = switch
+        button_x.when_pressed = cycle
+        button_y.when_pressed = cycle
+        pause()
+    except KeyboardInterrupt:
+        button_a.close()
+        button_b.close()
+        button_x.close()
+        button_y.close()
 
-try:
-    button_a.when_pressed = switch
-    button_b.when_pressed = switch
-    button_x.when_pressed = cycle
-    button_y.when_pressed = cycle
-    pause()
-except KeyboardInterrupt:
-    button_a.close()
-    button_b.close()
-    button_x.close()
-    button_y.close()
+
+x = threading.Thread(target=button_loop)
+x.start()
