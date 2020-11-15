@@ -20,6 +20,7 @@ def create_app():
         global doorSign
 
         while running:
+            print("Status in draw " + doorSign.get())
             doorSign.draw()
             time.sleep(0.05)
 
@@ -36,9 +37,11 @@ def create_app():
     @app.route("/status/<status>")
     def status(status):
         global doorSign
+
         safeStatus = escape(status)
         if doorSign.set(safeStatus):
             print("Status is now " + doorSign.get())
+            doorSign.draw()
             return jsonify({"status": safeStatus}), 200
         return jsonify({"status": "UNKNOWN: " + safeStatus}), 404
 
