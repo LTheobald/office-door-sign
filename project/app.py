@@ -5,17 +5,20 @@ from multiprocessing import Process
 from project.doorsign import DoorSign
 from markupsafe import escape
 
+doorSign = DoorSign()
+running = True
 
 def create_app():
     app = Flask(__name__)
-    running = True
-    doorSign = DoorSign()
 
     def interrupt():
         print("Terminating")
         p.terminate()
 
     def display_loop():
+        global running
+        global doorSign
+
         while running:
             doorSign.draw()
             time.sleep(0.05)
@@ -26,11 +29,13 @@ def create_app():
 
     @app.route("/switch")
     def switch():
+        global doorSign
         doorSign.switch
         return "OK", 200
 
     @app.route("/status/<status>")
     def status(status):
+        global doorSign
         safeStatus = escape(status)
         if doorSign.set(safeStatus):
             print("Status is now " + doorSign.get)

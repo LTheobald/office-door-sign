@@ -33,8 +33,7 @@ class DoorSign:
         for name, member in self.Status.__members__.items():
             if (name == status) | (name.lower() == status):
                 self.current_status = member
-                print("Set: " + self.current_status.name)
-            return True
+                return True
         return False
 
     def get(self):
