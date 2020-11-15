@@ -5,7 +5,6 @@ from project.status import Status, draw
 
 
 app = Flask(__name__)
-current_status = Status.FREE
 
 
 @app.route("/")
