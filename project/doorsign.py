@@ -32,12 +32,16 @@ class DoorSign:
     def set(self, status):
         for name, member in self.Status.__members__.items():
             if (name == status) | (name.lower() == status):
-                print("Setting new state to " + name)
                 self.current_status = member
-                return True
+                print("Set: " + self.current_status.name)
+            return True
         return False
 
+    def get(self):
+        return self.current_status.name
+
     def draw(self):
+        print("Draw: " + self.current_status.name)
         if self.current_status is self.Status.FREE:
             # Green
             self.unicornhatmini.set_all(0, 255, 0)

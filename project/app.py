@@ -33,6 +33,7 @@ def create_app():
     def status(status):
         safeStatus = escape(status)
         if doorSign.set(safeStatus):
+            print("Status is now " + doorSign.get)
             return jsonify({"status": safeStatus}), 200
         return jsonify({"status": "UNKNOWN: " + safeStatus}), 404
 
