@@ -11,8 +11,9 @@ class DoorSign:
         WORKING = 2
         ON_CALL = 3
 
+    current_status = Status.WORKING
+
     def __init__(self):
-        self.current_status = self.Status.WORKING
         self.unicornhatmini = UnicornHATMini()
         self.unicornhatmini.set_rotation(0)
         self.unicornhatmini.set_brightness(0.1)
