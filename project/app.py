@@ -1,10 +1,11 @@
 import time
 import threading
 from flask import Flask, jsonify, request
-from project.status import Status, draw
+from project.doorsign import DoorSign
 
 
 app = Flask(__name__)
+doorSign = DoorSign()
 
 
 @app.route("/")
@@ -12,43 +13,23 @@ def root():
     return jsonify({"running":True}), 200
 
 
-@app.route("/switch", methods = ['POST'])
+@app.route("/switch")
 def switch():
-    global current_status
-
-    content = request.json
-    if content["switch"] == "on":
-        print('Switching on')
-        current_status = Status.FREE
-        return jsonify({"switch":"on"}), 200
-    elif content["switch"] == "off":
-        print('Switching off')
-        current_status = Status.OFF
-        return jsonify({"switch":"off"}), 200
-    else:
-        return "", 400
+    doorSign.switch()
+    return "OK", 200
 
 
 @app.route("/status", methods=['POST'])
 def status():
     content = request.json
-    return set_status(content["status"])
-
-
-def set_status(status):
-    global current_status
-
-    for name, member in Status.__members__.items():
-        if (name == status) | (name.lower() == status):
-            print("Setting new state to " + name)
-            current_status = member
-            return jsonify({"status":name.lower()}), 200
-    return jsonify({"status":"unknown"}), 404
+    if DoorSign.set(content["status"]):
+        return jsonify({"status": content["status"]}), 200
+    return jsonify({"status": "UNKNOWN: " + content["status"]}), 404
 
 
 def display_loop():
     while True:
-        draw(current_status)
+        DoorSign.draw()
         time.sleep(0.05)
 
 
