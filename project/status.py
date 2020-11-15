@@ -25,11 +25,14 @@ unicornhatmini.set_brightness(0.1)
 
 def draw(status):
     if status == Status.FREE:
+        # Green
         unicornhatmini.set_all(0, 255, 0)
     elif status == Status.WORKING:
-        unicornhatmini.set_all(255, 0, 0)
+        # Amber
+        unicornhatmini.set_all(255, 191, 0)
     elif status == Status.ON_CALL:
-        unicornhatmini.set_all(0, 255, 255)
+        # Red
+        unicornhatmini.set_all(255, 0, 0)
     elif status == Status.OFF:
         unicornhatmini.clear()
 
