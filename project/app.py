@@ -15,12 +15,8 @@ def create_app():
         print("Terminating")
         p.terminate()
 
-    def display_loop():
-        global running
-        global doorSign
-
+    def display_loop(doorSign):
         while running:
-            print("Status in draw " + doorSign.get())
             doorSign.draw()
             time.sleep(0.05)
 
@@ -40,12 +36,10 @@ def create_app():
 
         safeStatus = escape(status)
         if doorSign.set(safeStatus):
-            print("Status is now " + doorSign.get())
-            doorSign.draw()
             return jsonify({"status": safeStatus}), 200
         return jsonify({"status": "UNKNOWN: " + safeStatus}), 404
 
-    p = Process(target=display_loop)
+    p = Process(target=display_loop, args={doorSign})
     p.start()
     atexit.register(interrupt)
     return app

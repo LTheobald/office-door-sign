@@ -11,9 +11,8 @@ class DoorSign:
         WORKING = 2
         ON_CALL = 3
 
-    current_status = Status.WORKING
-
     def __init__(self):
+        self.current_status = Status.WORKING
         self.unicornhatmini = UnicornHATMini()
         self.unicornhatmini.set_rotation(0)
         self.unicornhatmini.set_brightness(0.1)
@@ -41,7 +40,6 @@ class DoorSign:
         return self.current_status.name
 
     def draw(self):
-        print("Draw: " + self.current_status.name)
         if self.current_status is self.Status.FREE:
             # Green
             self.unicornhatmini.set_all(0, 255, 0)
