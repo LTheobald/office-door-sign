@@ -12,7 +12,7 @@ class DoorSign:
         ON_CALL = 3
 
     def __init__(self):
-        print(Door Init)
+        print("Door Init")
         self.current_status = self.Status.FREE
         self.unicornhatmini = UnicornHATMini()
         self.unicornhatmini.set_rotation(0)
