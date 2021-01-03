@@ -20,6 +20,7 @@ def set_status(status):
         if (name == status) | (name.lower() == status):
             print("Changing current status from", current_status, "to", member)
             current_status = member
+            draw()
             return True
     return False
 
@@ -41,6 +42,7 @@ def switchOnOff():
         current_status = Status.FREE
     else:
         current_status = Status.OFF
+    draw()
     return "OK", 200
 
 
@@ -50,3 +52,6 @@ def status(status):
     if set_status(safeStatus):
         return jsonify({"status": safeStatus}), 200
     return jsonify({"status": "UNKNOWN: " + safeStatus}), 404
+
+
+draw()
