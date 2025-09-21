@@ -1,0 +1,25 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "office-door-sign"
+version = "0.1.0"
+description = "FastAPI service for controlling an office door light panel"
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+  "fastapi>=0.111.0,<1.0.0",
+  "uvicorn[standard]>=0.29.0,<1.0.0"
+]
+
+[project.optional-dependencies]
+dev = [
+  "pytest>=8.0",
+  "httpx>=0.27",
+  "yapf>=0.40"
+]
+
+[tool.pytest.ini_options]
+pythonpath = ["src"]
+addopts = "-q"
