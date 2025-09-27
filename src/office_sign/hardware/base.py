@@ -11,6 +11,8 @@ class LightPanel(Protocol):
   def set_power(self, on: bool) -> None:
     """Turn the panel on or off."""
 
+def set_status(self, status: Status) -> None:
+    """Set the panel to display the provided status."""
 
 class PanelUnavailableError(RuntimeError):
   """Raised when the configured panel cannot be created."""

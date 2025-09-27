@@ -1,0 +1,13 @@
+__pycache__/
+*.py[cod]
+*.o
+*.so
+*.log
+.venv/
+.env
+.git/
+.gitignore
+.idea/
+*.iml
+sandbox/
+.DS_Store

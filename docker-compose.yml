@@ -1,0 +1,12 @@
+services:
+  app:
+    build:
+      context: .
+      args:
+        INSTALL_DEV: "true"
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./src:/app/src
+      - ./tests:/app/tests
+    command: uvicorn office_sign.api:create_app --factory --host 0.0.0.0 --port 8000 --reload

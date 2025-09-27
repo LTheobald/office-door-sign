@@ -15,7 +15,7 @@ class LightStatus(BaseModel):
 
 
 def create_app(panel: LightPanel | None = None) -> FastAPI:
-  """Create a FastAPI application configured with the provided panel."""
+  """Create a FastAPI aCapplication configured with the provided panel."""
 
   light_panel = panel or MockLightPanel()
   service = LightService(light_panel)

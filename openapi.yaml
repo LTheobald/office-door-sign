@@ -1,0 +1,63 @@
+openapi: 3.1.0
+info:
+  title: Office Door Sign
+  version: 0.1.0
+paths:
+  /health:
+    get:
+      summary: Health
+      operationId: health_health_get
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                additionalProperties:
+                  type: string
+                type: object
+                title: Response Health Health Get
+  /light/status:
+    get:
+      summary: Read Status
+      operationId: read_status_light_status_get
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LightStatus'
+  /light/on:
+    post:
+      summary: Turn On
+      operationId: turn_on_light_on_post
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LightStatus'
+  /light/off:
+    post:
+      summary: Turn Off
+      operationId: turn_off_light_off_post
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LightStatus'
+components:
+  schemas:
+    LightStatus:
+      properties:
+        power_on:
+          type: boolean
+          title: Power On
+      type: object
+      required:
+      - power_on
+      title: LightStatus

@@ -31,6 +31,37 @@ uvicorn office_sign.api:create_app --factory --reload
 
 By default the factory creates the application with the in-memory mock panel so it can run anywhere.
 
+### Running with Docker
+
+Build the image and run the API without installing Python on the host:
+
+```bash
+docker build -t office-door-sign .
+docker run --rm -p 8000:8000 office-door-sign
+```
+
+For live-reload development and test execution you can use Docker Compose:
+
+```bash
+docker compose up
+docker compose run --rm app pytest
+```
+
+The compose service mounts `src/` and `tests/` from the host so code changes trigger the reloadable
+`uvicorn` server.
+
+### Generating the OpenAPI specification
+
+Produce a standalone OpenAPI schema that can be imported into client tooling:
+
+```bash
+python -m office_sign.openapi --output openapi.yaml
+```
+
+The exporter infers the format from the file extension, so `.json`, `.yaml`, and `.yml` targets are
+all supported. The default output path is `openapi.json` in the project root if `--output` is
+omitted.
+
 ### Testing
 
 ```bash

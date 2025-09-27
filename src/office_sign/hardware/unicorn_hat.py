@@ -5,6 +5,7 @@ from __future__ import annotations
 from typing import Any
 
 from .base import LightPanel, PanelUnavailableError
+from ..status import Status
 
 try:
   from unicornhatmini import UnicornHATMini
@@ -24,7 +25,14 @@ class UnicornHatMiniPanel(LightPanel):
 
   def set_power(self, on: bool) -> None:
     if on:
-      self._hat.set_all(255, 255, 255)
+      self._hat.set_all(Status.FREE.color)
+    else:
+      self._hat.clear()
+    self._hat.show()
+
+  def set_status(self, status: Status) -> None:
+    if status is not None:
+      self._hat.set_all(status.color)
     else:
       self._hat.clear()
     self._hat.show()
