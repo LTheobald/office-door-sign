@@ -9,4 +9,4 @@ from .hardware.base import LightPanel
 
 @dataclass
 class LightService:
-  panel: LightPanel
+    panel: LightPanel
