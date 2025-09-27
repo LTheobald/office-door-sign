@@ -9,7 +9,4 @@ from .api import create_app
 app = create_app()
 
 if __name__ == "__main__":
-    uvicorn.run("office_sign.main:app",
-                host="0.0.0.0",
-                port=8000,
-                reload=False)
+    uvicorn.run("office_sign.main:app", host="0.0.0.0", port=8000, reload=False)
