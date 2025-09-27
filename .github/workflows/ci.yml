@@ -15,7 +15,7 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
-          python-version: "3.11"
+          python-version: "3.12"
 
       - name: Install dependencies
         run: |
@@ -24,9 +24,15 @@ jobs:
 
       - name: Check formatting
         run: |
-          python -m yapf -r --diff src tests > yapf.diff
+          set -euo pipefail
+          # Show YAPF version for reproducibility
+          python -m yapf --version || true
+          # Produce a unified diff to stdout and into a file
+          python -m yapf -r --diff src tests | tee yapf.diff
+          # If diff file is non-empty, fail the job and print guidance
           if [ -s yapf.diff ]; then
-            cat yapf.diff
+            echo "\n\n❌ Code formatting differences detected by YAPF."
+            echo "Run locally to fix: python -m yapf -r --in-place src tests"
             exit 1
           fi
 
