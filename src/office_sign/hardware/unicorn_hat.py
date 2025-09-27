@@ -1,11 +1,13 @@
 """Adapter for the Pimoroni Unicorn HAT Mini hardware."""
-
 from __future__ import annotations
 
+import logging
 from typing import Any
 
 from .base import LightPanel, PanelUnavailableError
 from ..status import Status
+
+logger = logging.getLogger(__name__)
 
 try:
   from unicornhatmini import UnicornHATMini
@@ -19,16 +21,9 @@ class UnicornHatMiniPanel(LightPanel):
   def __init__(self, brightness: float = 0.2) -> None:
     if UnicornHATMini is None:
       raise PanelUnavailableError(
-          "Unicorn HAT Mini library is not installed. Install `unicornhatmini`.")
+        "Unicorn HAT Mini library is not installed. Install `unicornhatmini`.")
     self._hat = UnicornHATMini()
     self._hat.set_brightness(brightness)
-
-  def set_power(self, on: bool) -> None:
-    if on:
-      self._hat.set_all(Status.FREE.color)
-    else:
-      self._hat.clear()
-    self._hat.show()
 
   def set_status(self, status: Status) -> None:
     if status is not None:
